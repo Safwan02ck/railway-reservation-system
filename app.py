@@ -13,7 +13,7 @@ app.secret_key = 'your_secret_key'
 db_config = {
     'host': 'localhost',
     'user': 'root',
-    'password': 'abcd',
+    'password': 'Blackstormer@02',
     'database': 'railway'
 }
 
@@ -32,8 +32,8 @@ def get_db_connection():
 def menu():
     return render_template('menu.html')
 
-@app.route('/available_trains', methods=['GET', 'POST'])
-def available_trains():
+@app.route('/availaible_trains', methods=['GET', 'POST'])
+def availaible_trains():
     if request.method == 'POST':
         try:
             start_opt = request.form['from']
@@ -43,7 +43,7 @@ def available_trains():
             date_user = datetime.datetime.strptime(date, "%Y-%m-%d").date()
             if date_user < current_date or date_user > max_date:
                 flash('Please enter a valid date!', 'error')
-                return redirect(url_for('available_trains'))
+                return redirect(url_for('availaible_trains'))
             
             conn = get_db_connection()
             cursor = conn.cursor()
@@ -59,13 +59,13 @@ def available_trains():
             cursor.close()
             conn.close()
             
-            return render_template('available_trains.html', trains=result)
+            return render_template('availaible_trains.html', trains=result)
         
         except Exception as e:
             flash(f'Error: {str(e)}', 'error')
-            return redirect(url_for('available_trains'))
+            return redirect(url_for('availaible_trains'))
     
-    return render_template('available_trains_form.html')
+    return render_template('availaible_trains_form.html')
 
 @app.route('/check_fare', methods=['GET', 'POST'])
 def check_fare():
